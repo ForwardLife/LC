@@ -1,0 +1,48 @@
+1, 2018年8月7日22:14:30
+Use dummy node as new ListNode(0), to save the seperate code finding the head. 
+Commom trick!!
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == NULL)
+            return l2; 
+        if (l2 == NULL)
+            return l1; 
+        ListNode *dummy = new ListNode(0);
+        //if (l1->val < l2->val){
+        //    head = l1; 
+        //    l1 = l1->next;
+        //}
+        //else{
+        //    head = l2; 
+        //    l2 = l2->next; 
+        //}
+        ListNode *headCopy = dummy; 
+        while (l1!= NULL && l2!= NULL){
+            if (l1->val < l2->val ){
+                headCopy->next = l1;
+                l1 = l1->next;
+            }
+            else{
+                headCopy->next = l2; 
+                l2 = l2->next; 
+            }
+             headCopy = headCopy->next;    
+        }
+        if (l1 != NULL){
+            headCopy->next = l1;
+        }
+        if (l2 != NULL){
+            headCopy->next = l2; 
+        }
+        return dummy->next; 
+    }
+};
