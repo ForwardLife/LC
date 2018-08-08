@@ -1,0 +1,22 @@
+
+
+2018年8月8日00:11:23
+经典hastMap 使用案例。记住语法。               
+这里没记住 hastT[nums[i]] = 1;花了很长时间
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int, int> hastT;
+        for (int i = 0; i < nums.size(); i++){
+            if (hastT.find(nums[i]) == hastT.end()){
+                hastT[nums[i]] = 1;
+            } 
+            else{
+                hastT[nums[i]]++; 
+            }
+            if (hastT[nums[i]] > nums.size() / 2)
+                return nums[i]; 
+        }
+    }
+};
