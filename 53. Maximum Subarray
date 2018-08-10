@@ -1,0 +1,59 @@
+2018年8月9日23:42:09
+典型DP问题
+回忆DP套路1确定状态定义（不好想），2状态转移方程
+1) class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        //DP問題
+        //state: f[i] the max sum from 0 when ith item is used 
+        // transition function: f[i] = f[i - 1] > 0 ? f[i - 1] + nums[i] : nums[i]
+        vector<int> f(nums.size());
+        f[0] = nums[0];
+        int res = nums[0]; 
+        for (int i = 1; i < nums.size(); i++){
+            f[i] = max(f[i - 1] + nums[i], nums[i]);
+            res = res > f[i] ? res : f[i];
+        }
+        return res;
+        
+    }
+};
+优化: 空间O(N) -> O(1)
+无需记录每个f[i]，只要取最大即可。有一个量代替f[i]
+2) class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        //DP問題
+        //state: f[i] the max sum from 0 when ith item is used 
+        // transition function: f[i] = f[i - 1] > 0 ? f[i - 1] + nums[i] : nums[i]
+        //vector<int> f(nums.size());
+        //f[0] = nums[0];
+        int sum = nums[0];
+        int res = nums[0]; 
+        for (int i = 1; i < nums.size(); i++){
+            //f[i] = max(f[i - 1] + nums[i], nums[i]);
+            sum = max(sum + nums[i], nums[i]);
+            //res = res > f[i] ? res : f[i];
+            res = max(res, sum); 
+        }
+        return res; 
+    }
+};
+
+prefix sum, 有一类题是可以这样解决的。
+3)class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        // divide and conquer 
+        //prefix sum 
+        int res = INT_MIN; 
+        int prefixSum = 0; 
+        int minSum = 0;
+        for (int i = 0; i < nums.size(); i++){
+            prefixSum += nums[i];
+            res = max(res, prefixSum - minSum);
+            minSum = min(minSum, prefixSum);
+        }
+        return res; 
+    }
+};
