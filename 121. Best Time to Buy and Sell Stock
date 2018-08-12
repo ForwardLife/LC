@@ -1,0 +1,27 @@
+
+2018年8月12日00:04:26
+使用DP的思想，可以有章可循的解题。
+state: 在第i天买stock的profit, f[i]. f[i] = prices[i] - minPrices[i - 1]. minPrices[i - 1]是前i-1天最小值。
+transition: 具体分析，此题的transition function是minPrices[i] = min(minPrices[i-1], prices[i]);
+initial: f[0] = 0, 第一天没有收益。minPrices[0] = prices[0];
+result: 是所有f[i]中最大值。
+这是整体思路，一定按这种思路，步步为营。先不要想着优化空间，把思路理清楚。
+进一步优化空间，f[i]和minPrices[i]可分别由两个变量替代，iteration迭代。
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.size() == 0){
+            return 0; 
+        }
+        int res = 0; 
+        int profit = 0;
+        int minPrice = prices[0]; 
+        for (int i = 1; i < prices.size(); i++){
+            profit = max(0,prices[i] - minPrice);
+            minPrice = min(minPrice, prices[i]);
+            res = max(profit, res);
+        }
+        return res; 
+    }
+};
