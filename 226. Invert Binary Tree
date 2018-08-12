@@ -1,0 +1,51 @@
+2018年8月11日23:39:07
+Cool! Fast pass. 
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL)
+            return root; 
+        TreeNode* temp = root->left;
+        root->left = invertTree(root->right); 
+        root->right = invertTree(temp);
+        return root; 
+    }
+};
+
+递归（recursion）和迭代（iteration）是两个重要的算法实现方式，也是两种不同的理念。之前看到过一个说法来表示两者的区别，递归是俄罗斯套娃，一个套着一个；迭代是一个串珠，一个连着一个。虽然不能完全解释区别，倒也有几分形象。
+
+递归 Recursion
+
+一句话解释递归，就是在程序中，一个过程或者函数不断地调用自身，在达成某项条件时结束递归过程（递归出口）。一个问题可以不断地被分解成子问题，然而解决的方法还是同样的。这种情况下就可以使用递归。
+
+递归的优点其实是对应于开发人员的，采用递归实现的程序或者算法，容易理解，编写清晰。 但是缺点却是对于机器的，递归操作十分占用内存资源。为什么递归会这样？递归是用栈机制实现的，每深入一层，都要占去一块栈数据区域，对嵌套层数深的一些算法，递归会力不从心，空间上会以内存崩溃而告终，而且递归也带来了大量的函数调用，这也有许多额外的时间开销。设想一下，递归操作是一层套着一层，但是在递归过程总，外一层还没有结束依然占用着内存，下一层就开始了，还需要开辟新的内存进行操作，如此往复，直到达成条件完成递归，可以想象这需要大量的内存。
+
+迭代 Iteration
+
+迭代指的是另一种循环，前一次迭代得到的结果被用于作为下一次迭代的输入。例如，
+
+1
+2
+3
+4
+5
+6
+int i, a = 0;        // 迭代前初始化
+for(i = 0; i < 3; ++i)  // 循环3次
+{  
+    a = a + i;      //前一次得到的a是下次计算a的输入变量。
+}
+printf("%d",a);    // 打印出数字6
+从这个例子可以看出，而迭代虽然效率高，运行时间只因循环次数增加而增加。不过迭代没什么额外开销，空间占有上也没有什么增加。相对于递归来说，迭代在大部分情况下（上面的例子比较简单）不容易理解，编写复杂问题时比较困难。
+
+from: https://csruiliu.github.io/blog/2016/06/16/iteration&recursion/
