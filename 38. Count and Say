@@ -1,0 +1,33 @@
+2018年8月12日11:26:16
+但凡遇到前后比较 res[j] == res[j - 1]，要注意第一个 或 最后一个元素的处理。
+
+class Solution {
+public:
+    string countAndSay(int n) {
+        if (n == 1)
+            return "1";
+        string res = "1"; 
+        for (int i = 2; i <= n; i++){
+            int count = 1; 
+            string temp = "";
+            for (int j = 1; j < res.size(); j++){
+                if (res[j] == res[j - 1]){
+                    count++;
+                }
+                else {
+                 temp += to_string(count);
+                 temp += res[j - 1];
+                 count = 1; 
+                }
+            }
+                temp += to_string(count);
+                temp += res[res.size() -1];
+            
+            if (i == 2){
+                temp = "11";
+            }
+            res = temp; 
+        }
+        return res; 
+    }
+};
