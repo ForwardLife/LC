@@ -1,0 +1,30 @@
+2018年8月13日22:43:56
+先后逻辑顺序搞好，开始报错
+            hashset.insert(n);
+            n = getNum(n); 
+顺序反了
+
+class Solution {
+public:
+   bool isHappy(int n) {
+        // Write your code here
+        unordered_set<int> hashset;
+        while (n != 1) {
+            if (hashset.find(n) != hashset.end()) {
+                return false; 
+            }
+            hashset.insert(n);
+            n = getNum(n); 
+        }
+        return true; 
+    }
+    
+    int getNum(int n) {
+        int sum = 0; 
+        while (n > 0) {
+            sum += (n % 10) * (n % 10);
+            n /= 10; 
+        }
+        return sum; 
+    }
+};
