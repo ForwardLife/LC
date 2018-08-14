@@ -1,0 +1,31 @@
+2018年8月13日23:28:55
+非常有意思的一道题。4点：
+1，倒序
+2，转为数字
+3，进位
+4，string操作加在前面：res = to_string(rem) + res;
+
+
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string res = "";
+        int carr = 0;
+        int rem; 
+        int iv; 
+        int jv; 
+        for (int i = a.size() - 1, j = b.size() - 1; i >= 0 || j >= 0; i--, j--){
+            iv = (i >= 0) ? a[i] - '0' : 0;
+            jv = (j >= 0) ? b[j] - '0' : 0;
+            int sum = iv + jv; 
+            rem = (sum + carr)  % 2; 
+            carr = (sum + carr) / 2; 
+  
+            res = to_string(rem) + res; 
+        }
+        if (carr){
+            res = '1' + res; 
+        }
+        return res; 
+    }
+};
