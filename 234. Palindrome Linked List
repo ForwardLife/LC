@@ -1,0 +1,39 @@
+
+2018年8月15日00:56:03
+1， 快慢指针找中点
+2， revers后半部分
+3， 后半部分和前半部分对照
+快慢指针在linked list用的真多。记住格式
+
+
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        // slow, fast pointer to find middle point 
+        if (!head || !head->next){
+            return true; 
+        }
+        ListNode *slow = head, *fast = head; 
+        while(fast->next && fast->next->next){ //fast->next <- 坑
+            slow = slow->next; 
+            fast = fast->next->next;
+        }
+        // reverse second half 
+        ListNode *secHead = slow->next, *pre = NULL; //<- 坑
+        while(secHead){
+            ListNode* temp = secHead->next; 
+            secHead->next = pre;
+            pre = secHead;
+            secHead = temp; 
+        }
+        while(pre){ //<- 坑
+            if (pre->val != head->val){
+                return false;
+            }
+            pre = pre->next;
+            head = head->next;
+        }
+        return true; 
+        
+    }
+};
