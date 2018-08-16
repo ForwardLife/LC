@@ -1,0 +1,24 @@
+2018年8月15日22:52:39
+DP思想，
+关键是if (i >= 1  && j >= 1 && j < i),每次取值操作，要先保险index有效范围内
+
+
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> res(numRows);
+        //DP philosophy res[i][j] = res[i-1][j-1] + res[i-1][j]; 
+        for (int i = 0; i < numRows; i++){
+            for (int j = 0; j < i + 1; j++){
+                if (i >= 1  && j >= 1 && j < i){
+                    res[i].push_back(res[i-1][j-1] + res[i-1][j]); 
+                }
+                else{
+                    res[i].push_back(1); 
+                }
+            }
+            
+        }
+        return res; 
+    }
+};
