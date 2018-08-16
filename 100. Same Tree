@@ -1,0 +1,19 @@
+2018年8月15日22:20:02
+recursion 应用
+
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if (p == NULL && q == NULL){
+            return true; 
+        }
+        if (q == NULL){
+            return false;
+        }
+        if (p == NULL){
+            return false;
+        }
+        
+        return (p->val == q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right)); 
+    }
+};
