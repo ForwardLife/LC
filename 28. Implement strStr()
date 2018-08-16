@@ -1,0 +1,30 @@
+2018年8月16日00:14:11
+忽略了最后一个，也就是if (hSize - i < needle.size()) 这个条件之外的，
+haystack最后一个值得判断。
+所以 最后要加 return -1；
+
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if (needle.size() == 0){
+            return 0; 
+        }
+        if (haystack.size() == 0 || haystack.size() < needle.size()){
+            return -1; 
+        }
+        int hSize = haystack.size();
+        for (int i = 0; i < hSize; i++){
+            if (hSize - i < needle.size())
+                return -1; 
+            int j = 0, ii = i; 
+            while(j < needle.size() && haystack[ii] == needle[j]){
+                j++; 
+                ii++; 
+            }
+            if (j == needle.size())
+                return i;
+        }
+        return -1; 
+    }
+};
