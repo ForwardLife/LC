@@ -1,0 +1,27 @@
+2018年8月24日00:32:54
+
+在寻找depth同时 判断是否是balanced。
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if (root == NULL)
+            return 1;
+        bool balanced = 1; 
+        depth(root, &balanced);
+        return balanced; 
+ 
+    }
+    int depth(TreeNode* root, bool *balanced){
+        if (root == NULL)
+            return 0;
+        int leftD = depth(root->left, balanced);
+        int rightD = depth(root->right, balanced);
+        
+        if (abs(leftD - rightD) > 1){
+            *balanced = 0;
+            return -1; 
+        }
+        
+        return max(leftD, rightD) + 1; 
+    }
+};
