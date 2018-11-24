@@ -1,0 +1,27 @@
+Find two items which the sum equals target. The array is sorted. 
+注意array是sorted。如果不是sorted，用hashMap的方法。
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        vector<int> res(2, 0); 
+        int right = numbers.size() - 1;
+        int left = 0; 
+        while(left < right){
+            int tempSum = numbers[left] + numbers[right]; 
+            if(tempSum == target){
+                res[0] = left + 1;
+                res[1] = right + 1;
+                return res; 
+            }
+            if(tempSum < target){
+                left++;
+            }
+            else{
+                right--; 
+            }
+            
+        }
+        
+    }
+};
