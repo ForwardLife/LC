@@ -1,0 +1,32 @@
+class Solution {
+public:
+    #define abs(x) ((x) > 0 ? (x) : (-x))
+    
+    int threeSumClosest(vector<int>& nums, int target) {
+        //sort array
+        sort(nums.begin(), nums.end());
+        int left, right, minDiff = INT_MAX, Diff; 
+        //for loop 
+        for(int i = 0; i < nums.size(); i++){
+            left = i + 1; 
+            right = nums.size() - 1; 
+        //Binary search two pointers     
+            while(left < right){
+                Diff = nums[left] + nums[right] + nums[i] - target;
+                if (Diff == 0){
+                    return target; 
+                }
+                else if (Diff < 0){
+                    left++;     
+                }
+                else {
+                    right--; 
+                }
+                if(abs(Diff) < abs(minDiff)){
+                    minDiff = Diff; 
+                }
+            }
+        }
+        return target + minDiff; 
+    }
+};
