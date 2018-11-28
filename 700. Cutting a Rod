@@ -1,0 +1,22 @@
+class Solution {
+public:
+    /**
+     * @param prices: the prices
+     * @param n: the length of rod
+     * @return: the max value
+     */
+    int cutting(vector<int> &prices, int n) {
+        // Write your code here
+        // state: f[i] length of i value
+        //transition: f[i] = max(f[i - j] + prices[j]), for j as index of prices
+        //initial: f[0] = 0
+        // 先想转移方程，再想相应的状态怎么定义。转移方程一定是对应于某些不同的操作，然后从中取最大或最小值
+        vector<int> f(n + 1, 0);
+        for(int i = 1; i <= n; i++){
+            for(int j = 0; j < i; j++){
+                f[i] = max(f[i], f[i - (j + 1)] + prices[j]);
+            }
+        }
+        return f[n];
+    }
+};
