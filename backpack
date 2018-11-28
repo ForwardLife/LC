@@ -1,0 +1,37 @@
+class Solution {
+public:
+    /**
+     * @param m: An integer m denotes the size of a backpack
+     * @param A: Given n items with size A[i]
+     * @return: The maximum size
+     */
+    int backPack(int m, vector<int> &A) {
+        // write your code here
+            // write your code here
+        //DP[i][j] 状态表示 i容量的背包在前j件物体中 取得的最大值
+        //state transition:   第j件物品放不放入包中，两个动作中去大值 dp[i][j] = max(dp[i][j-1], dp[i-A[j]][j-1] + A[j])
+        //initial: dp[0][j] = 0; dp[i][0] = A[0] (if i >= A[0])
+        int sizeA = A.size();
+        vector<vector<int>> dp(m + 1, vector<int>(sizeA, 0)); 
+        //initial
+        for(int j = 0; j < sizeA; j++){
+            dp[0][j] = 0; 
+        }
+        for(int i = 0; i < m + 1; i++){
+            if(i >= A[0]){
+                dp[i][0] = A[0];
+            }
+        }
+        for(int i = 1; i < m + 1; i++){
+            for(int j = 1; j < sizeA; j++){
+                if(i >= A[j]){
+                    dp[i][j] = max(dp[i][j - 1], dp[i - A[j]][j - 1] + A[j]);
+                }
+                else{
+                    dp[i][j] = dp[i][j - 1]; 
+                }
+            }
+        }
+        return dp[m][sizeA - 1]; 
+    }
+};
