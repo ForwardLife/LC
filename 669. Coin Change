@@ -1,0 +1,25 @@
+class Solution {
+public:
+    /**
+     * @param coins: a list of integer
+     * @param amount: a total amount of money amount
+     * @return: the fewest number of coins that you need to make up
+     */
+    int coinChange(vector<int> &coins, int amount) {
+        // write your code here
+        // state: dp[i] 总钱是i,对应的最小值
+       // transition:  操作是放入每个coin，状态转移是对应每个操作，取最小值：dp[i] = min(dp[i], dp[i - coins[j]] + 1)，for j 遍历coins
+       //initial: dp[0] = 0，dp[i] = amount + 1
+       int sizeCoin = coins.size();
+       vector<int> dp(amount + 1, amount + 1);
+       dp[0] = 0; 
+       for (int i = 1; i < amount + 1; i++){
+           for(int j = 0; j < sizeCoin; j++){
+               if(i >= coins[j]){
+               dp[i] = min(dp[i], dp[i - coins[j]] + 1); 
+               }
+           }
+       }
+       return dp[amount] > amount ? -1 : dp[amount]; 
+    }
+};
