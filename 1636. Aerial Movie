@@ -1,0 +1,59 @@
+In order to prevent passengers from being too bored during the flight,
+LQ Airlines decided to play two movies during the flight. Since the movie 
+cannot be played during the take-off and landing of the aircraft, LQ Airlines must ensure that
+the duration of the two movies to be less than or equal to the flight duration minus 30 minutes, 
+and the total length of the two movies should be as long as possible. Now given t ,the flight 
+duration(minutes), and array dur[],the length of movies. Please output the length of the two 
+movies in order of length. If there are multiple groups of the same length,
+select the one which contains the longest single moive.It is guarantee that there is a least one solution.
+
+类似于two sum，先排序。
+class Solution {
+public:
+    /**
+     * @param t: the length of the flight
+     * @param dur: the length of movies 
+     * @return: output the lengths of two movies
+     */
+    vector<int> aerial_Movie(int t, vector<int> &dur) {
+        // Write your code here
+        int timeA = t - 30; 
+        int sizeD = dur.size(); 
+        sort(dur.begin(), dur.end()); 
+        vector<int> res(2, 0); 
+        if(timeA <= dur[0]){
+            return res; 
+        }
+        int left = 0; 
+        int right = sizeD - 1; 
+        int diff = 0; 
+        int minDiff = INT_MAX; 
+        while(left < right){
+            int sumLR = dur[left] + dur[right];
+            int diff = sumLR - timeA; 
+            if(sumLR == timeA){
+                res[0] = dur[left];
+                res[1] = dur[right];
+                return res; 
+            }
+            else if(sumLR < timeA){
+               if(diff < 0 && abs(diff) < minDiff){
+                minDiff = abs(diff); 
+                res[0] = dur[left];
+                res[1] = dur[right];
+            }
+                left++;
+            }
+            else {
+            if(diff < 0 && abs(diff) < minDiff){
+                minDiff = abs(diff); 
+                res[0] = dur[left];
+                res[1] = dur[right];
+            }
+                right--; 
+            }
+
+        }
+        return res; 
+    }
+};
